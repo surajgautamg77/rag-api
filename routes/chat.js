@@ -151,7 +151,7 @@ router.get("/history", async (req, res) => {
 
     const query = `
       SELECT id, type, question, answer, context_documents, created_at
-      FROM chat_history
+      FROM message_history
       ORDER BY created_at DESC
       LIMIT $1 OFFSET $2
     `;
@@ -177,7 +177,7 @@ router.delete("/history/:id", async (req, res) => {
   try {
     const chatId = req.params.id;
 
-    const query = "DELETE FROM chat_history WHERE id = $1 RETURNING id";
+    const query = "DELETE FROM message_history WHERE id = $1 RETURNING id";
     const result = await pool.query(query, [chatId]);
 
     if (result.rows.length === 0) {
@@ -200,7 +200,7 @@ router.delete("/history/:id", async (req, res) => {
 // DELETE /api/chat/history - Clear all chat history
 router.delete("/history", async (req, res) => {
   try {
-    await pool.query("DELETE FROM chat_history");
+    await pool.query("DELETE FROM message_history");
 
     res.json({
       success: true,
@@ -226,7 +226,7 @@ router.put("/history/:id/respond", async (req, res) => {
     }
 
     const query = `
-      UPDATE chat_history 
+      UPDATE message_history 
       SET answer = $1, type = 'human_responded'
       WHERE id = $2 AND type = 'human_intervention'
       RETURNING id
@@ -258,7 +258,7 @@ async function getRecentChatHistory(limit = 3) {
   try {
     const query = `
       SELECT question, answer
-      FROM chat_history
+      FROM message_history
       ORDER BY created_at DESC
       LIMIT $1
     `;
@@ -280,7 +280,7 @@ async function saveChatHistory(
 ) {
   try {
     const query = `
-      INSERT INTO chat_history (question, answer, context_documents, type)
+      INSERT INTO message_history (question, answer, context_documents, type)
       VALUES ($1, $2, $3, $4)
     `;
 

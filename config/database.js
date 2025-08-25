@@ -41,9 +41,9 @@ const initDatabase = async () => {
       );
     `);
 
-    // Create chat_history table
+    // Create message_history table
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS chat_history (
+      CREATE TABLE IF NOT EXISTS message_history (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         type VARCHAR(50),
         question TEXT NOT NULL,
