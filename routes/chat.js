@@ -37,7 +37,7 @@ router.post("/query", async (req, res) => {
         question,
         response,
         ["nlu training data set"],
-        "answered"
+        resp.data.intent == "request_human" ? "request_human" : "answered"
       );
       console.log({ chathist });
       return res.json({
