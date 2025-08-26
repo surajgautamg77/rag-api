@@ -20,7 +20,7 @@ router.post("/query", async (req, res) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:9945/spacy-nlu/my-bot-id/chat",
+      url: "http://localhost:9945/spacy-nlu/my-bot/chat",
       headers: { "Content-Type": "application/json" },
       data: data,
     };
