@@ -219,8 +219,9 @@ router.delete("/history", async (req, res) => {
 router.put("/history/:id/respond", async (req, res) => {
   try {
     const chatId = req.params.id;
+    console.log({ chatId });
     const { humanResponse } = req.body;
-
+    console.log({ humanResponse });
     if (!humanResponse) {
       return res.status(400).json({ error: "Human response is required" });
     }
@@ -232,8 +233,9 @@ router.put("/history/:id/respond", async (req, res) => {
       RETURNING id
     `;
 
+    console.log({ query });
     const result = await pool.query(query, [humanResponse, chatId]);
-
+    console.log({ result });
     if (result.rows.length === 0) {
       return res.status(404).json({
         error: "Chat entry not found or not eligible for human response",
