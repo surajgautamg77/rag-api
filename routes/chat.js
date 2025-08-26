@@ -229,7 +229,7 @@ router.put("/history/:id/respond", async (req, res) => {
     const query = `
       UPDATE message_history 
       SET answer = $1, type = 'human_responded'
-      WHERE id = $2 AND type = 'human_intervention'
+      WHERE id = $2 AND type = 'request_human'
       RETURNING id
     `;
 
