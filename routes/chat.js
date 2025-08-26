@@ -46,13 +46,13 @@ router.post("/query", async (req, res) => {
         answer: response,
         context: "",
         sources: [], // Remove duplicates
-        chatHistory: [],
+        // chatHistory: [],
         type: "answered",
       });
     }
 
     // Get the last 3 chat interactions for context
-    const chatHistory = await getRecentChatHistory(3);
+    // const chatHistory = await getRecentChatHistory(3);
 
     // Search for relevant document chunks with improved context building
     const similarChunks = await documentProcessor.searchSimilarChunks(
@@ -101,8 +101,8 @@ router.post("/query", async (req, res) => {
     // Generate response using OpenAI
     const answer = await openaiService.generateResponse(
       question,
-      context,
-      chatHistory
+      context
+      // chatHistory
     );
 
     // Determine the type based on context and response
@@ -132,7 +132,7 @@ router.post("/query", async (req, res) => {
       answer: answer,
       context: context,
       sources: [...new Set(contextDocuments)], // Remove duplicates
-      chatHistory: chatHistory,
+      // chatHistory: chatHistory,
       type: type,
     });
   } catch (error) {
